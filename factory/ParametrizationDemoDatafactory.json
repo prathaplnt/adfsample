@@ -1,0 +1,17 @@
+{
+	"name": "ParametrizationDemoDatafactory",
+	"properties": {
+		"globalParameters": {
+			"EnvironmentParam": {
+				"type": "string",
+				"value": "D"
+			}
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f6021a9c-f1b9-4778-84f5-21f1ed9226d8",
+		"tenantId": "1a9565aa-9d55-4ae6-9439-31ab04ce5937"
+	}
+}

@@ -1,0 +1,67 @@
+{
+	"name": "ls_config",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_config",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "configsdata.xlsx",
+				"container": "configs"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "StorageAccountName",
+				"type": "String"
+			},
+			{
+				"name": "ContainerName",
+				"type": "String"
+			},
+			{
+				"name": "FolderName",
+				"type": "String"
+			},
+			{
+				"name": "FileName",
+				"type": "String"
+			},
+			{
+				"name": "AKVKeyName",
+				"type": "String"
+			},
+			{
+				"name": "DestinationSQLServerName",
+				"type": "String"
+			},
+			{
+				"name": "DestinationDBName",
+				"type": "String"
+			},
+			{
+				"name": "DestinationSchemaName",
+				"type": "String"
+			},
+			{
+				"name": "DestinationSQLServerName",
+				"type": "String"
+			},
+			{
+				"name": "DestLoginID_Key",
+				"type": "String"
+			},
+			{
+				"name": "DestPassword_Key",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,59 @@
+{
+	"name": "ds_source_parametrized",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Source_Parametrized",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ls_sourceSA_URL": {
+					"value": "@dataset().ds_dstols_source_SA_URL",
+					"type": "Expression"
+				},
+				"ls_akv_KeyVaultSecretName": {
+					"value": "@dataset().ds_dstols_AKV_KeyValueSecretName",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"ds_rootfoldername": {
+				"type": "string"
+			},
+			"ds_subfoldername": {
+				"type": "string"
+			},
+			"ds_filename": {
+				"type": "string"
+			},
+			"ds_dstols_source_SA_URL": {
+				"type": "string"
+			},
+			"ds_dstols_AKV_KeyValueSecretName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().ds_filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().ds_subfoldername",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().ds_rootfoldername",
+					"type": "Expression"
+				}
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

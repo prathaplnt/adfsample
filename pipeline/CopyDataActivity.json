@@ -1,0 +1,145 @@
+{
+	"name": "CopyDataActivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopySingleFile_Dynamic",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"modifiedDatetimeStart": "2023-06-21T00:00:00Z",
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_source_parametrized",
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_rootfoldername": {
+								"value": "@pipeline().parameters.plParam_dsSrc_rootfoldername",
+								"type": "Expression"
+							},
+							"ds_subfoldername": {
+								"value": "@pipeline().parameters.plParam_dsSrc_subfoldername",
+								"type": "Expression"
+							},
+							"ds_filename": {
+								"value": "@pipeline().parameters.plParam_dsSrc_filename",
+								"type": "Expression"
+							},
+							"ds_dstols_source_SA_URL": {
+								"value": "@pipeline().parameters.plParam_dsSrc_dstols_source_SA_URL",
+								"type": "Expression"
+							},
+							"ds_dstols_AKV_KeyValueSecretName": {
+								"value": "@pipeline().parameters.plParam_dsSrc_dstols_AKV_KeyValueSecretName",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sink_parametrized",
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_Param_SchemaName": {
+								"value": "@pipeline().parameters.plParam_dsSnk_SchemaName",
+								"type": "Expression"
+							},
+							"ds_Param_SQLTableName": {
+								"value": "@pipeline().parameters.plParam_dsSnk_SQLTableName",
+								"type": "Expression"
+							},
+							"ds_dstols_param_ServerURL": {
+								"value": "@pipeline().parameters.plParam_dsSnk_dstols_param_ServerURL",
+								"type": "Expression"
+							},
+							"ds_dstols_param_DBName": {
+								"value": "@pipeline().parameters.plParam_dsSnk_dstols_param_DBName",
+								"type": "Expression"
+							},
+							"ds_dstols_param_UserID": {
+								"value": "@pipeline().parameters.plParam_dsSnk_dstols_param_UserID",
+								"type": "Expression"
+							},
+							"ds_dstols_param_PasswordKey": {
+								"value": "@pipeline().parameters.plParam_dsSnk_dstols_param_PasswordKey",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"plParam_dsSrc_rootfoldername": {
+				"type": "string"
+			},
+			"plParam_dsSrc_subfoldername": {
+				"type": "string"
+			},
+			"plParam_dsSrc_filename": {
+				"type": "string"
+			},
+			"plParam_dsSrc_dstols_source_SA_URL": {
+				"type": "string"
+			},
+			"plParam_dsSrc_dstols_AKV_KeyValueSecretName": {
+				"type": "string"
+			},
+			"plParam_dsSnk_SchemaName": {
+				"type": "string"
+			},
+			"plParam_dsSnk_SQLTableName": {
+				"type": "string"
+			},
+			"plParam_dsSnk_dstols_param_ServerURL": {
+				"type": "string"
+			},
+			"plParam_dsSnk_dstols_param_DBName": {
+				"type": "string"
+			},
+			"plParam_dsSnk_dstols_param_UserID": {
+				"type": "string"
+			},
+			"plParam_dsSnk_dstols_param_PasswordKey": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-06-21T13:36:09Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

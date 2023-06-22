@@ -1,0 +1,119 @@
+{
+	"name": "HighLevelDynamicCopyPl",
+	"properties": {
+		"activities": [
+			{
+				"name": "fetchTheConfigValues",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"dataset": {
+						"referenceName": "ls_config",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "iterativeLoad",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "fetchTheConfigValues",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('fetchTheConfigValues').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Execute Pipeline1",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "CopyDataActivity",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"plParam_dsSrc_rootfoldername": {
+										"value": "@item().ContainerName",
+										"type": "Expression"
+									},
+									"plParam_dsSrc_subfoldername": {
+										"value": "@item().FolderName",
+										"type": "Expression"
+									},
+									"plParam_dsSrc_filename": {
+										"value": "@item().FileName",
+										"type": "Expression"
+									},
+									"plParam_dsSrc_dstols_source_SA_URL": {
+										"value": "@item().StorageAccountURL",
+										"type": "Expression"
+									},
+									"plParam_dsSrc_dstols_AKV_KeyValueSecretName": {
+										"value": "@item().AKVKeyName",
+										"type": "Expression"
+									},
+									"plParam_dsSnk_SchemaName": {
+										"value": "@item().DestinationSchemaName",
+										"type": "Expression"
+									},
+									"plParam_dsSnk_SQLTableName": {
+										"value": "@item().DestinationSQLTableName",
+										"type": "Expression"
+									},
+									"plParam_dsSnk_dstols_param_ServerURL": {
+										"value": "@item().DestinationSQLServerURL",
+										"type": "Expression"
+									},
+									"plParam_dsSnk_dstols_param_DBName": {
+										"value": "@item().DestinationDBName",
+										"type": "Expression"
+									},
+									"plParam_dsSnk_dstols_param_UserID": {
+										"value": "@item().DestLoginID",
+										"type": "Expression"
+									},
+									"plParam_dsSnk_dstols_param_PasswordKey": {
+										"value": "@item().DestPassword_Key",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-06-22T02:37:47Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

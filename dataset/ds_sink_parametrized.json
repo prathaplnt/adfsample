@@ -1,0 +1,61 @@
+{
+	"name": "ds_sink_parametrized",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sink_parametrized",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ls_param_ServerURL": {
+					"value": "@dataset().ds_dstols_param_ServerURL",
+					"type": "Expression"
+				},
+				"ls_Param_DBName": {
+					"value": "@dataset().ds_dstols_param_DBName",
+					"type": "Expression"
+				},
+				"ls_Param_UserID": {
+					"value": "@dataset().ds_dstols_param_UserID",
+					"type": "Expression"
+				},
+				"ls_Param_PasswordKey": {
+					"value": "@dataset().ds_dstols_param_PasswordKey",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"ds_Param_SchemaName": {
+				"type": "string"
+			},
+			"ds_Param_SQLTableName": {
+				"type": "string"
+			},
+			"ds_dstols_param_ServerURL": {
+				"type": "string"
+			},
+			"ds_dstols_param_DBName": {
+				"type": "string"
+			},
+			"ds_dstols_param_UserID": {
+				"type": "string"
+			},
+			"ds_dstols_param_PasswordKey": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().ds_Param_SchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().ds_Param_SQLTableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

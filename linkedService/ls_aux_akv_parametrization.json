@@ -1,0 +1,11 @@
+{
+	"name": "ls_aux_akv_parametrization",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://demoParametrization-AKV.vault.azure.net/"
+		}
+	}
+}
